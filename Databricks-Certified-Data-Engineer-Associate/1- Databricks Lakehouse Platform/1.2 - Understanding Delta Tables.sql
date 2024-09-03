@@ -8,6 +8,8 @@ USE CATALOG hive_metastore
 
 -- COMMAND ----------
 
+DROP TABLE IF EXISTS employees;
+
 CREATE TABLE employees
   (id INT, name STRING, salary DOUBLE);
 
@@ -60,7 +62,7 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
-DESCRIBE DETAIL employees
+DESCRIBE DETAIL employees;
 
 -- COMMAND ----------
 
@@ -70,6 +72,13 @@ DESCRIBE DETAIL employees
 -- COMMAND ----------
 
 -- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC
+-- MAGIC # OR 
+-- MAGIC display(dbutils.fs.ls("dbfs:/user/hive/warehouse/employees"))
 
 -- COMMAND ----------
 
@@ -88,7 +97,11 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+DESCRIBE DETAIL employees;
+
+-- COMMAND ----------
+
+-- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees/'
 
 -- COMMAND ----------
 
