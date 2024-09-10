@@ -5,7 +5,7 @@
 
 -- COMMAND ----------
 
-USE CATALOG hive_metastore
+USE CATALOG hive_metastore;
 
 -- COMMAND ----------
 
