@@ -5,7 +5,7 @@
 
 -- COMMAND ----------
 
-USE CATALOG hive_metastore
+USE CATALOG hive_metastore;
 
 -- COMMAND ----------
 
@@ -99,6 +99,14 @@ VACUUM employees RETAIN 0 HOURS
 
 -- COMMAND ----------
 
+DESCRIBE DETAIL employees;
+
+-- COMMAND ----------
+
+DESCRIBE HISTORY employees;
+
+-- COMMAND ----------
+
 SELECT * FROM employees@v1
 
 -- COMMAND ----------
@@ -109,6 +117,7 @@ SELECT * FROM employees@v1
 
 -- COMMAND ----------
 
+-- AFTER DROPPING TABLE IT'S NOT POSSIBLE TO GET OLD VERSION TABLE 
 DROP TABLE employees
 
 -- COMMAND ----------
