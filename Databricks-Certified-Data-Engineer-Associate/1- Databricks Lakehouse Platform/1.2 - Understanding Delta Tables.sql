@@ -1,5 +1,14 @@
 -- Databricks notebook source
 -- MAGIC %md
+-- MAGIC ## Delete Table employee if exists 
+
+-- COMMAND ----------
+
+DROP TABLE IF EXISTS hive_metastore.default.employees;
+
+-- COMMAND ----------
+
+-- MAGIC %md
 -- MAGIC ## Creating Delta Lake Tables
 
 -- COMMAND ----------
@@ -8,7 +17,13 @@ USE CATALOG hive_metastore
 
 -- COMMAND ----------
 
-CREATE TABLE employees
+-- MAGIC %fs ls '/user/hive/warehouse/'
+
+-- COMMAND ----------
+
+DROP TABLE IF EXISTS employees;
+
+CREATE TABLE IF NOT EXISTS employees
   (id INT, name STRING, salary DOUBLE);
 
 -- COMMAND ----------
@@ -33,7 +48,7 @@ INSERT INTO employees
 VALUES 
   (1, "Adam", 3500.0),
   (2, "Sarah", 4020.5);
-
+/*
 INSERT INTO employees
 VALUES
   (3, "John", 2999.3),
@@ -60,7 +75,7 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
-DESCRIBE DETAIL employees
+DESCRIBE DETAIL employees;
 
 -- COMMAND ----------
 
@@ -70,6 +85,13 @@ DESCRIBE DETAIL employees
 -- COMMAND ----------
 
 -- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC
+-- MAGIC # OR 
+-- MAGIC display(dbutils.fs.ls("dbfs:/user/hive/warehouse/employees/_delta_log"))
 
 -- COMMAND ----------
 
@@ -88,7 +110,11 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+DESCRIBE DETAIL employees;
+
+-- COMMAND ----------
+
+-- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees/'
 
 -- COMMAND ----------
 
