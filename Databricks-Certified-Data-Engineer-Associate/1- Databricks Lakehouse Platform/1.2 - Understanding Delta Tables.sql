@@ -4,7 +4,7 @@
 
 -- COMMAND ----------
 
-
+DROP TABLE IF EXISTS hive_metastore.default.employees;
 
 -- COMMAND ----------
 
@@ -23,8 +23,8 @@ USE CATALOG hive_metastore
 
 DROP TABLE IF EXISTS employees;
 
--- CREATE TABLE IF NOT EXISTS employees
---   (id INT, name STRING, salary DOUBLE);
+CREATE TABLE IF NOT EXISTS employees
+  (id INT, name STRING, salary DOUBLE);
 
 -- COMMAND ----------
 
@@ -48,7 +48,7 @@ INSERT INTO employees
 VALUES 
   (1, "Adam", 3500.0),
   (2, "Sarah", 4020.5);
-
+/*
 INSERT INTO employees
 VALUES
   (3, "John", 2999.3),
