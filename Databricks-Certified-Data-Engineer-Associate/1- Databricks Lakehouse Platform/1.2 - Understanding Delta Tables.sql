@@ -142,10 +142,6 @@ DESCRIBE DETAIL employees;
 
 -- COMMAND ----------
 
-DESCRIBE DETAIL employees
-
--- COMMAND ----------
-
 SELECT * FROM employees
 
 -- COMMAND ----------
