@@ -18,7 +18,7 @@ FROM employees VERSION AS OF 4
 
 -- COMMAND ----------
 
-SELECT * FROM employees@v4
+SELECT * FROM employees@v1
 
 -- COMMAND ----------
 
@@ -52,8 +52,7 @@ DESCRIBE DETAIL employees
 
 -- COMMAND ----------
 
-OPTIMIZE employees
-ZORDER BY id
+OPTIMIZE employees ZORDER BY (id);
 
 -- COMMAND ----------
 
@@ -76,6 +75,8 @@ DESCRIBE HISTORY employees
 -- COMMAND ----------
 
 VACUUM employees
+
+-- Nothing will be cleane up before 7 days after the last vacuum
 
 -- COMMAND ----------
 
@@ -117,7 +118,7 @@ SELECT * FROM employees@v1
 
 -- COMMAND ----------
 
--- AFTER DROPPING TABLE IT'S NOT POSSIBLE TO GET OLD VERSION TABLE 
+-- AFTER DROPPING TABLE IT'S NOT POSSIBLE TO GET OLD VERSION TABLE BECAUSE TABLE IS MANAGED TABLE ( DESCRIBE EXTENDED employees; )
 DROP TABLE employees
 
 -- COMMAND ----------
