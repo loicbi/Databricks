@@ -59,6 +59,13 @@ DROP TABLE external_default
 
 -- COMMAND ----------
 
+-- MAGIC %python 
+-- MAGIC dbutils.ls.rm('dbfs:/Shared', True)
+-- MAGIC dbutils.ls.rm('dbfs:/mnt/demo', True)
+-- MAGIC
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC ## Creating Schemas
 
@@ -114,6 +121,10 @@ DROP TABLE external_new_default;
 
 -- MAGIC %md
 -- MAGIC ## Creating Schemas in Custom Location
+
+-- COMMAND ----------
+
+DROP SCHEMA IF EXISTS custom;
 
 -- COMMAND ----------
 
