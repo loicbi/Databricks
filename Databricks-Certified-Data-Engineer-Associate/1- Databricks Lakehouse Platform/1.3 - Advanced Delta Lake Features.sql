@@ -9,7 +9,7 @@ USE CATALOG hive_metastore;
 
 -- COMMAND ----------
 
-DESCRIBE HISTORY employees
+DESCRIBE HISTORY employees;
 
 -- COMMAND ----------
 
@@ -19,6 +19,10 @@ FROM employees VERSION AS OF 4
 -- COMMAND ----------
 
 SELECT * FROM employees@v1
+
+-- COMMAND ----------
+
+DESCRIBE EXTENDED employees;
 
 -- COMMAND ----------
 
