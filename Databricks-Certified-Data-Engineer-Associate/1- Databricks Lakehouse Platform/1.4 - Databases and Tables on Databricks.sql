@@ -59,9 +59,12 @@ DROP TABLE external_default
 
 -- COMMAND ----------
 
--- MAGIC %python 
--- MAGIC dbutils.ls.rm('dbfs:/Shared', True)
--- MAGIC dbutils.ls.rm('dbfs:/mnt/demo', True)
+-- MAGIC %python
+-- MAGIC from pyspark.dbutils import DBUtils
+-- MAGIC
+-- MAGIC dbutils = DBUtils(spark)
+-- MAGIC dbutils.fs.rm('dbfs:/Shared', True)
+-- MAGIC dbutils.fs.rm('dbfs:/mnt/demo', True)
 -- MAGIC
 
 -- COMMAND ----------
