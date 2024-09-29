@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS smartphones
 (id INT, name STRING, brand STRING, year INT);
 
 INSERT INTO smartphones
-VALUES (1, 'iPhone 14', 'Apple', 2022),
+VALUES (1, 'iPhone 16', 'Apple', 2024),
       (2, 'iPhone 13', 'Apple', 2021),
       (3, 'iPhone 6', 'Apple', 2014),
       (4, 'iPad Air', 'Apple', 2013),
@@ -47,6 +47,10 @@ SHOW TABLES;
 
 -- COMMAND ----------
 
+DESCRIBE EXTENDED view_apple_phones;
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC
 -- MAGIC ## Creating Temporary Views
@@ -71,13 +75,14 @@ SHOW TABLES;
 
 -- COMMAND ----------
 
-CREATE GLOBAL TEMP VIEW global_temp_view_latest_phones
+CREATE GLOBAL TEMP VIEW  global_temp_view_latest_phones
 AS SELECT * FROM smartphones
     WHERE year > 2020
     ORDER BY year DESC;
 
 -- COMMAND ----------
 
+-- when using global temp view, we need to specify the schema global_temp
 SELECT * FROM global_temp.global_temp_view_latest_phones;
 
 -- COMMAND ----------
