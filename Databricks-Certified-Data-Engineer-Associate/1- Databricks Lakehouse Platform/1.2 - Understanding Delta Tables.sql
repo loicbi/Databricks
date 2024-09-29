@@ -59,8 +59,7 @@ DESCRIBE EXTENDED employees;
 INSERT INTO employees
 VALUES 
   (1, "Adam", 3500.0),
-  (2, "Sarah", 4020.5)
-  ;
+  (2, "Sarah", 4020.5);
 
 INSERT INTO employees
 VALUES
