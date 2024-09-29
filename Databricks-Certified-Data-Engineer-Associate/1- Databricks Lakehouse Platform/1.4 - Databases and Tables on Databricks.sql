@@ -76,6 +76,7 @@ DROP TABLE external_default
 
 -- DROP TABLE IF EXISTS  managed_new_default;
 -- DROP TABLE IF EXISTS  external_new_default;
+
 USE CATALOG hive_metastore;
 DROP SCHEMA IF EXISTS new_default CASCADE; 
 
@@ -85,13 +86,13 @@ DROP SCHEMA IF EXISTS new_default CASCADE;
 -- MAGIC # delete location  external table  
 -- MAGIC dbutils.fs.rm('dbfs:/mnt/demo', True)
 
+
 -- COMMAND ----------
 
 CREATE SCHEMA  new_default;
 
 -- COMMAND ----------
 
-DESCRIBE DATABASE EXTENDED new_default -- OR DESCRIBE SCHEMA EXTENDED new_default
 
 -- COMMAND ----------
 
@@ -137,17 +138,24 @@ DROP TABLE external_new_default;
 
 -- COMMAND ----------
 
+-- MAGIC %python
+-- MAGIC # delete location  external table  
+-- MAGIC dbutils.fs.rm('dbfs:/mnt/demo', True)
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC ## Creating Schemas in Custom Location
 
 -- COMMAND ----------
 
+USE CATALOG hive_metastore;
 CREATE SCHEMA custom
 LOCATION 'dbfs:/Shared/schemas/custom.db'
 
 -- COMMAND ----------
 
-DESCRIBE DATABASE EXTENDED custom
+DESCRIBE DATABASE EXTENDED custom;
 
 -- COMMAND ----------
 

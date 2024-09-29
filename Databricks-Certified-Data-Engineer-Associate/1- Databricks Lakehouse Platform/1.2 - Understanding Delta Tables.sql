@@ -28,6 +28,18 @@ CREATE TABLE IF NOT EXISTS employees
 
 -- COMMAND ----------
 
+DESCRIBE HISTORY employees;
+
+-- COMMAND ----------
+
+DESCRIBE DETAIL employees;
+
+-- COMMAND ----------
+
+DESCRIBE EXTENDED employees;
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC
 -- MAGIC ## Catalog Explorer
@@ -48,7 +60,7 @@ INSERT INTO employees
 VALUES 
   (1, "Adam", 3500.0),
   (2, "Sarah", 4020.5);
-/*
+
 INSERT INTO employees
 VALUES
   (3, "John", 2999.3),
@@ -101,6 +113,17 @@ DESCRIBE DETAIL employees;
 -- COMMAND ----------
 
 UPDATE employees 
+SET name = 'Loic'
+WHERE id = 1;
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC display(dbutils.fs.ls("dbfs:/user/hive/warehouse/employees/"))
+
+-- COMMAND ----------
+
+UPDATE employees 
 SET salary = salary + 100
 WHERE name LIKE "A%"
 
@@ -115,10 +138,6 @@ DESCRIBE DETAIL employees;
 -- COMMAND ----------
 
 -- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees/'
-
--- COMMAND ----------
-
-DESCRIBE DETAIL employees
 
 -- COMMAND ----------
 
@@ -139,7 +158,7 @@ DESCRIBE HISTORY employees
 
 -- COMMAND ----------
 
--- MAGIC %fs head 'dbfs:/user/hive/warehouse/employees/_delta_log/00000000000000000005.json'
+-- MAGIC %fs head 'dbfs:/user/hive/warehouse/employees/_delta_log/00000000000000000008.json'
 
 -- COMMAND ----------
 
