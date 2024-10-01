@@ -1,4 +1,5 @@
 # Databricks notebook source
+# CHECK IF PATH EXISTS 
 def path_exists(path):
   try:
     dbutils.fs.ls(path)
