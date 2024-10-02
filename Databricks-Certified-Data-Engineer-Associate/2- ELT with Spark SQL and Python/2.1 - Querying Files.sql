@@ -30,6 +30,10 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json`
 
 -- COMMAND ----------
 
+SELECT COUNT(*) FROM json.`${dataset.bookstore}/customers-json/export_*.json`;
+
+-- COMMAND ----------
+
 SELECT * FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
@@ -38,6 +42,7 @@ SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
 
+ -- input_file_name(): for knowing file source 
  SELECT *,
     input_file_name() source_file
   FROM json.`${dataset.bookstore}/customers-json`;
