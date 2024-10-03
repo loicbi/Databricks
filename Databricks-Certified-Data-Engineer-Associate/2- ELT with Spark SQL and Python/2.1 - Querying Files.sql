@@ -119,7 +119,7 @@ DESCRIBE EXTENDED books_csv
 -- MAGIC (spark.read
 -- MAGIC         .table("books_csv")
 -- MAGIC       .write
--- MAGIC         .mode("append")
+-- MAGIC         .mode("append") # we add 12 more rows to the existing table in the cloud storage 
 -- MAGIC         .format("csv")
 -- MAGIC         .option('header', 'true')
 -- MAGIC         .option('delimiter', ';')
@@ -157,12 +157,18 @@ DESCRIBE EXTENDED customers;
 
 -- COMMAND ----------
 
+DESCRIBE HISTORY customers;
+
+-- COMMAND ----------
+
 CREATE TABLE books_unparsed AS
 SELECT * FROM csv.`${dataset.bookstore}/books-csv`;
 
 SELECT * FROM books_unparsed;
 
 -- COMMAND ----------
+
+-- TO AVOID DUPLICATES ROWS IN TABLE , WE MUST USE TEMP VIEW USING PATH OPTIONS EVEN IF TEMP VIEW IS DROPPED 
 
 CREATE TEMP VIEW books_tmp_vw
    (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
@@ -181,3 +187,11 @@ SELECT * FROM books
 -- COMMAND ----------
 
 DESCRIBE EXTENDED books
+
+-- COMMAND ----------
+
+DROP VIEW books_tmp_vw;
+
+-- COMMAND ----------
+
+SELECT * FROM books;
