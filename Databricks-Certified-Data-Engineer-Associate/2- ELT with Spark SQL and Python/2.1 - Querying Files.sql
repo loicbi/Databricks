@@ -12,6 +12,13 @@
 
 -- COMMAND ----------
 
+-- MAGIC %python
+-- MAGIC # delete files in {dataset_bookstore}
+-- MAGIC
+-- MAGIC dbutils.fs.rm(f"{dataset_bookstore}", True)
+
+-- COMMAND ----------
+
 -- MAGIC %run ../Includes/Copy-Datasets
 
 -- COMMAND ----------
