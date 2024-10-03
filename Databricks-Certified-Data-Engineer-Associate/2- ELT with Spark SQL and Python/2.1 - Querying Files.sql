@@ -49,7 +49,7 @@ SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
 
- -- input_file_name(): for knowing file source 
+ -- input_file_name(): know where files come from  
  SELECT *,
     input_file_name() source_file
   FROM json.`${dataset.bookstore}/customers-json`;
