@@ -81,6 +81,11 @@ SELECT count(*) FROM orders
 
 -- COMMAND ----------
 
+SELECT COUNT(*) FROM customers;
+
+
+-- COMMAND ----------
+
 CREATE OR REPLACE TEMP VIEW customers_updates AS 
 SELECT * FROM json.`${dataset.bookstore}/customers-json-new`;
 
@@ -91,9 +96,16 @@ WHEN MATCHED AND c.email IS NULL AND u.email IS NOT NULL THEN
   UPDATE SET email = u.email, updated = u.updated
 WHEN NOT MATCHED THEN INSERT *
 
+
+-- before: 1700 
+-- after : 1901 
+
+-- num_affected_rows	num_updated_rows	num_deleted_rows	num_inserted_rows
+-- 301	100	0	201
+
 -- COMMAND ----------
 
-CREATE OR REPLACE TEMP VIEW books_updates
+--CREATE OR REPLACE TEMP VIEW books_updates
    (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
 USING CSV
 OPTIONS (
