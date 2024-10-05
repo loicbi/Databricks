@@ -16,7 +16,7 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 -- COMMAND ----------
 
-SELECT * FROM orders
+SELECT * FROM orders;
 
 -- COMMAND ----------
 
@@ -34,12 +34,26 @@ DESCRIBE HISTORY orders
 
 -- COMMAND ----------
 
+/*
+
+It looks like you're referencing a SQL command, possibly for use in a Databricks environment. The `INSERT OVERWRITE` statement is commonly used in SQL to overwrite existing data in a table or partition with new data. Here's a basic example of how you might use `INSERT OVERWRITE` in a Databricks notebook with SQL:
+
+```sql
+-- Assuming you have a table named 'orders'
+-- And you want to overwrite it with new data
+
+INSERT OVERWRITE TABLE orders
+SELECT * FROM another_table;
+```
+
+*/
+
 INSERT OVERWRITE orders
-SELECT * FROM parquet.`${dataset.bookstore}/orders`
+SELECT * FROM parquet.`${dataset.bookstore}/orders`;
 
 -- COMMAND ----------
 
-DESCRIBE HISTORY orders
+DESCRIBE HISTORY orders;
 
 -- COMMAND ----------
 
