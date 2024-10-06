@@ -33,6 +33,30 @@ FROM customers
 SELECT from_json(profile) AS profile_struct
   FROM customers;
 
+/*
+
+  from_json(jsonStr, schema[, options])
+
+  > SELECT from_json('{"a":1, "b":0.8}', 'a INT, b DOUBLE');
+ {1,0.8}
+
+> SELECT from_json('{"time":"26/08/2015"}', 'time Timestamp', map('timestampFormat', 'dd/MM/yyyy'));
+ {2015-08-26 00:00:00}
+
+
+*/
+
+-- COMMAND ----------
+
+
+ SELECT map(1.0, '2', 3.0, '4');
+ -- {1.0 -> 2, 3.0 -> 4}
+ 
+ 
+-- SELECT from_json('{"time":"26/08/2015"}', 'time Timestamp', map('timestampFormat', 'dd/MM/yyyy'));
+
+
+
 -- COMMAND ----------
 
 SELECT profile 
