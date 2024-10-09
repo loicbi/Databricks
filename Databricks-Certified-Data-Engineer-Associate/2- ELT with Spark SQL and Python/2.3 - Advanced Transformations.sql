@@ -118,8 +118,19 @@ FROM orders;
 
 -- COMMAND ----------
 
-SELECT customer_id
+-- MAGIC %python
+-- MAGIC from pyspark.sql.functions import array_sort, collect_set
+-- MAGIC
+-- MAGIC df2 = spark.createDataFrame([(12,), (5,), (5,)], ('age',))
+-- MAGIC
+-- MAGIC df2.agg(array_sort(collect_set('age')).alias('c')).collect()
+-- MAGIC
+
+-- COMMAND ----------
+
+SELECT customer_id, array_sort(collect_set(order_id))
 FROM orders
+group by customer_id;
 
 -- COMMAND ----------
 
@@ -127,7 +138,7 @@ SELECT customer_id,
   collect_set(order_id) AS orders_set,
   collect_set(books.book_id) AS books_set
 FROM orders
-GROUP BY customer_id
+GROUP BY customer_id;
 
 -- COMMAND ----------
 
@@ -138,6 +149,16 @@ GROUP BY customer_id
 -- COMMAND ----------
 
 SELECT array_distinct(array(5,5,5,25,10,10))
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC from pyspark.sql.functions import flatten,array_distinct
+-- MAGIC df = spark.createDataFrame([([[1, 2, 2, 3], [4, 5], [6]],), ([None, [4, 5]],)], ['column'])
+-- MAGIC # df.display(truncate=False)
+-- MAGIC
+-- MAGIC df.select(df.column.alias('before'), array_distinct(flatten(df.column).alias('after'))).display()
+-- MAGIC
 
 -- COMMAND ----------
 
@@ -195,6 +216,55 @@ SELECT * FROM orders_updates
 
 -- MAGIC %md
 -- MAGIC ## Reshaping Data with Pivot
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC from pyspark.sql.functions import flatten, array_distinct, sum
+-- MAGIC from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+-- MAGIC
+-- MAGIC # data = [
+-- MAGIC #     ('one', 'A', 1, 'x'),
+-- MAGIC #     ('one', 'B', 2, 'y'),
+-- MAGIC #     ('one', 'C', 3, 'z'),
+-- MAGIC #     ('two', 'A', 4, 'q'),
+-- MAGIC #     ('two', 'B', 5, 'w'),
+-- MAGIC #     ('two', 'C', 6, 't')
+-- MAGIC # ]
+-- MAGIC
+-- MAGIC # schema = StructType([
+-- MAGIC #     StructField('foo', StringType(), True),
+-- MAGIC #     StructField('bar', StringType(), True),
+-- MAGIC #     StructField('baz', IntegerType(), True),
+-- MAGIC #     StructField('zoo', StringType(), True)
+-- MAGIC # ])
+-- MAGIC
+-- MAGIC # df1 = spark.createDataFrame(data, schema)
+-- MAGIC # display(df1)
+-- MAGIC
+-- MAGIC # pivoted_df1 = df1.groupBy("bar", "zoo").pivot("foo").agg(sum("baz"))
+-- MAGIC # display(pivoted_df1)
+-- MAGIC
+-- MAGIC df = spark.sql("""
+-- MAGIC  SELECT
+-- MAGIC     customer_id,
+-- MAGIC     book.book_id AS book_id,
+-- MAGIC     book.quantity AS quantity
+-- MAGIC   FROM orders_enriched
+-- MAGIC                """)
+-- MAGIC df.display()
+-- MAGIC
+-- MAGIC df2_pivoted = df.groupBy("customer_id").pivot("book_id").agg(sum("quantity"))
+-- MAGIC df2_pivoted.display()
+-- MAGIC
+
+-- COMMAND ----------
+
+  SELECT
+    customer_id,
+    book.book_id AS book_id,
+    book.quantity AS quantity
+  FROM orders_enriched
 
 -- COMMAND ----------
 
