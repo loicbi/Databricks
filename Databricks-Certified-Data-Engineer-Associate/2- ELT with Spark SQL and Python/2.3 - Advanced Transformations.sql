@@ -65,11 +65,11 @@ LIMIT 1
 
 -- COMMAND ----------
 
-CREATE OR REPLACE TEMP VIEW parsed_customers AS
-  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
+CREATE OR REPLACE TEMPORARY VIEW parsed_customers AS
+  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"FREDDY","last_name":"ASSOGBA","gender":"M","address":{"street":"999 Av Rue St Andre","city":"Montreal","country":"Canada"}}')) AS profile_struct
   FROM customers;
   
-SELECT * FROM parsed_customers
+SELECT * FROM parsed_customers;
 
 -- COMMAND ----------
 
@@ -95,18 +95,31 @@ FROM orders
 
 -- COMMAND ----------
 
+DESC orders
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC ## Explode Function
 
 -- COMMAND ----------
 
-SELECT order_id, customer_id, explode(books) AS book 
-FROM orders
+SELECT explode(array(5,5,5,25,10,10))
+
+-- COMMAND ----------
+
+SELECT order_id, customer_id, explode(books) AS book -- EXPLODE USED IN ARRAY DATA TYPE COLUMN
+FROM orders;
 
 -- COMMAND ----------
 
 -- MAGIC %md
 -- MAGIC ## Collecting Rows
+
+-- COMMAND ----------
+
+SELECT customer_id
+FROM orders
 
 -- COMMAND ----------
 
@@ -121,6 +134,10 @@ GROUP BY customer_id
 -- MAGIC %md
 -- MAGIC
 -- MAGIC ##Flatten Arrays
+
+-- COMMAND ----------
+
+SELECT array_distinct(array(5,5,5,25,10,10))
 
 -- COMMAND ----------
 
