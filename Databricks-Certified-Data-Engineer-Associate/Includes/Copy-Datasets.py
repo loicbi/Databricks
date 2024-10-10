@@ -1,4 +1,5 @@
 # Databricks notebook source
+# CHECK IF PATH EXISTS 
 def path_exists(path):
   try:
     dbutils.fs.ls(path)
@@ -13,7 +14,7 @@ def path_exists(path):
 
 def download_dataset(source, target):
     files = dbutils.fs.ls(source)
-
+    print(f"download_dataset  :::   Found {len(files)} files")
     for f in files:
         source_path = f"{source}/{f.name}"
         target_path = f"{target}/{f.name}"
@@ -33,6 +34,7 @@ spark.conf.set(f"dataset.bookstore", dataset_bookstore)
 def get_index(dir):
     files = dbutils.fs.ls(dir)
     index = 0
+    print(f"get_index  :::   Found {len(files)} files")
     if files:
         file = max(files).name
         index = int(file.rsplit('.', maxsplit=1)[0])
@@ -41,6 +43,7 @@ def get_index(dir):
 # COMMAND ----------
 
 def set_current_catalog(catalog_name):
+    print(f"USE CATALOG {catalog_name}")
     spark.sql(f"USE CATALOG {catalog_name}")
 
 # COMMAND ----------
@@ -50,12 +53,14 @@ streaming_dir = f"{dataset_bookstore}/orders-streaming"
 raw_dir = f"{dataset_bookstore}/orders-raw"
 
 def load_file(current_index):
+    print(f"Loading file {current_index} to the bookstore dataset")
     latest_file = f"{str(current_index).zfill(2)}.parquet"
     print(f"Loading {latest_file} file to the bookstore dataset")
     dbutils.fs.cp(f"{streaming_dir}/{latest_file}", f"{raw_dir}/{latest_file}")
 
     
 def load_new_data(all=False):
+    print("Loading new data to the bookstore dataset")
     index = get_index(raw_dir)
     if index >= 10:
         print("No more data to load\n")
@@ -78,6 +83,7 @@ raw_orders_dir = f"{dataset_bookstore}/orders-json-raw"
 raw_books_dir = f"{dataset_bookstore}/books-cdc"
 
 def load_json_file(current_index):
+    print(f"Loading json file {current_index} to the bookstore dataset")
     latest_file = f"{str(current_index).zfill(2)}.json"
     print(f"Loading {latest_file} orders file to the bookstore dataset")
     dbutils.fs.cp(f"{streaming_orders_dir}/{latest_file}", f"{raw_orders_dir}/{latest_file}")
@@ -86,6 +92,7 @@ def load_json_file(current_index):
 
     
 def load_new_json_data(all=False):
+    print("Loading new json data to the bookstore dataset")
     index = get_index(raw_orders_dir)
     if index >= 10:
         print("No more data to load\n")
