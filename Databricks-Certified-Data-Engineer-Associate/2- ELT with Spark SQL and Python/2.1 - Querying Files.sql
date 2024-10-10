@@ -12,6 +12,13 @@
 
 -- COMMAND ----------
 
+-- MAGIC %python
+-- MAGIC # delete files in {dataset_bookstore}
+-- MAGIC
+-- MAGIC dbutils.fs.rm(f"{dataset_bookstore}", True)
+
+-- COMMAND ----------
+
 -- MAGIC %run ../Includes/Copy-Datasets
 
 -- COMMAND ----------
@@ -30,6 +37,10 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json`
 
 -- COMMAND ----------
 
+SELECT COUNT(*) FROM json.`${dataset.bookstore}/customers-json/export_*.json`;
+
+-- COMMAND ----------
+
 SELECT * FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
@@ -38,6 +49,7 @@ SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
 
+ -- input_file_name(): know where files come from  
  SELECT *,
     input_file_name() source_file
   FROM json.`${dataset.bookstore}/customers-json`;
@@ -107,7 +119,7 @@ DESCRIBE EXTENDED books_csv
 -- MAGIC (spark.read
 -- MAGIC         .table("books_csv")
 -- MAGIC       .write
--- MAGIC         .mode("append")
+-- MAGIC         .mode("append") # we add 12 more rows to the existing table in the cloud storage 
 -- MAGIC         .format("csv")
 -- MAGIC         .option('header', 'true')
 -- MAGIC         .option('delimiter', ';')
@@ -145,12 +157,19 @@ DESCRIBE EXTENDED customers;
 
 -- COMMAND ----------
 
+DESCRIBE HISTORY customers;
+
+-- COMMAND ----------
+
 CREATE TABLE books_unparsed AS
 SELECT * FROM csv.`${dataset.bookstore}/books-csv`;
 
 SELECT * FROM books_unparsed;
 
 -- COMMAND ----------
+
+-- TO AVOID DUPLICATES ROWS IN TABLE , WE MUST USE TEMP VIEW USING PATH OPTIONS EVEN IF TEMP VIEW IS DROPPED 
+-- AFTER DROPPING THE TABLE BOOKS WILL BE MANAGED TABLE TYPE
 
 CREATE TEMP VIEW books_tmp_vw
    (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
@@ -169,3 +188,11 @@ SELECT * FROM books
 -- COMMAND ----------
 
 DESCRIBE EXTENDED books
+
+-- COMMAND ----------
+
+DROP VIEW books_tmp_vw;
+
+-- COMMAND ----------
+
+SELECT * FROM books;

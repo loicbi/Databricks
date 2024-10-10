@@ -11,7 +11,7 @@
 
 -- COMMAND ----------
 
-SELECT * FROM orders
+SELECT *, size(books) FROM orders
 
 -- COMMAND ----------
 
@@ -24,7 +24,7 @@ SELECT * FROM orders
 SELECT
   order_id,
   books,
-  FILTER (books, i -> i.quantity >= 2) AS multiple_copies
+  FILTER (books, x -> x.quantity >= 2) AS multiple_copies
 FROM orders
 
 -- COMMAND ----------
@@ -33,7 +33,7 @@ SELECT order_id, multiple_copies
 FROM (
   SELECT
     order_id,
-    FILTER (books, i -> i.quantity >= 2) AS multiple_copies
+    FILTER (books, x -> x.quantity >= 2) AS multiple_copies
   FROM orders)
 WHERE size(multiple_copies) > 0;
 
@@ -50,7 +50,9 @@ SELECT
   books,
   TRANSFORM (
     books,
-    b -> CAST(b.subtotal * 0.8 AS INT)
+    b ->(
+      CASE WHEN b.quantity >= 2 THEN CAST(b.subtotal * 0.5 AS INT) ELSE b.subtotal * 1 END
+    )
   ) AS subtotal_after_discount
 FROM orders;
 
