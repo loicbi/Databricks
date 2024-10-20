@@ -75,6 +75,11 @@
 
 # COMMAND ----------
 
+# MAGIC %sql
+# MAGIC SELECT * FROM author_counts_tmp_vw ORDER BY author;
+
+# COMMAND ----------
+
 (spark.table("author_counts_tmp_vw")                               
       .writeStream  
       .trigger(processingTime='4 seconds')
@@ -85,9 +90,7 @@
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT *
-# MAGIC FROM author_counts
+spark.sql('SELECT * FROM author_counts').display()
 
 # COMMAND ----------
 
@@ -101,6 +104,7 @@
 # MAGIC values ("B19", "Introduction to Modeling and Simulation", "Mark W. Spong", "Computer Science", 25),
 # MAGIC         ("B20", "Robot Modeling and Control", "Mark W. Spong", "Computer Science", 30),
 # MAGIC         ("B21", "Turing's Vision: The Birth of Computer Science", "Chris Bernhardt", "Computer Science", 35)
+# MAGIC         
 
 # COMMAND ----------
 
