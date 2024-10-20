@@ -7,6 +7,10 @@
 
 # COMMAND ----------
 
+dbutils.fs.rm('dbfs:/mnt/demo/author_counts_checkpoint', recurse=True)
+
+# COMMAND ----------
+
 # MAGIC %run ../Includes/Copy-Datasets
 
 # COMMAND ----------
@@ -17,10 +21,9 @@
 
 # COMMAND ----------
 
-(spark.readStream
-      .table("books")
+spark.readStream \
+      .table("books") \
       .createOrReplaceTempView("books_streaming_tmp_vw")
-)
 
 # COMMAND ----------
 
@@ -82,7 +85,7 @@
 
 (spark.table("author_counts_tmp_vw")                               
       .writeStream  
-      .trigger(processingTime='4 seconds')
+      .trigger(processingTime='10 seconds')
       .outputMode("complete")
       .option("checkpointLocation", "dbfs:/mnt/demo/author_counts_checkpoint")
       .table("author_counts")
@@ -90,7 +93,8 @@
 
 # COMMAND ----------
 
-spark.sql('SELECT * FROM author_counts').display()
+# MAGIC %sql
+# MAGIC SELECT * FROM author_counts
 
 # COMMAND ----------
 
