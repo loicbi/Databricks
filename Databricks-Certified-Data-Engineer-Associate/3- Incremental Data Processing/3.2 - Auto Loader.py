@@ -44,8 +44,8 @@ display(files)
 
 # MAGIC %sql
 # MAGIC SELECT * FROM orders_updates
-# MAGIC where to_json(books) = '[{"book_id":"B08","quantity":1,"subtotal":41}]'
-# MAGIC and customer_id = 'C00788'
+# MAGIC -- where to_json(books) = '[{"book_id":"B08","quantity":1,"subtotal":41}]'
+# MAGIC -- and customer_id = 'C00788'
 
 # COMMAND ----------
 
