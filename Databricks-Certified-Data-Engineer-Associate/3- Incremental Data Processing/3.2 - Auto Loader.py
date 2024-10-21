@@ -28,6 +28,8 @@ display(files)
 
 # COMMAND ----------
 
+# https://learn.microsoft.com/en-us/azure/databricks/ingestion/cloud-object-storage/auto-loader/unity-catalog#using-auto-loader-to-load-to-a-unity-catalog-managed-table
+
 (spark.readStream
         .format("cloudFiles")
         .option("cloudFiles.format", "parquet")
@@ -42,6 +44,8 @@ display(files)
 
 # MAGIC %sql
 # MAGIC SELECT * FROM orders_updates
+# MAGIC where to_json(books) = '[{"book_id":"B08","quantity":1,"subtotal":41}]'
+# MAGIC and customer_id = 'C00788'
 
 # COMMAND ----------
 
