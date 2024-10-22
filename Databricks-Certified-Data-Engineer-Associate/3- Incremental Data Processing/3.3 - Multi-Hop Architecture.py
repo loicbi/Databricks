@@ -17,10 +17,10 @@
 
 # COMMAND ----------
 
-# I want to get 1 file parquets in path 
+# I want to get 3 files parquets in path 
 files  = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
-if len(files) > 1:
-    for file in files[1:]:
+if len(files) > 3:
+    for file in files[3:]:
         dbutils.fs.rm(file.path, True)
 
 # COMMAND ----------
@@ -73,6 +73,11 @@ display(files)
 
 # COMMAND ----------
 
+path_bronze = 'dbfs:/mnt/demo/checkpoints/orders_bronze'
+dbutils.fs.rm(path_bronze, True)
+
+# COMMAND ----------
+
 (spark.table("orders_tmp")
       .writeStream
       .format("delta")
@@ -97,6 +102,11 @@ load_new_data()
 
 # COMMAND ----------
 
+# MAGIC %sql
+# MAGIC SELECT * FROM json.`/mnt/demo-datasets/bookstore/customers-json/*.json`
+
+# COMMAND ----------
+
 (spark.read
       .format("json")
       .load(f"{dataset_bookstore}/customers-json")
@@ -117,6 +127,14 @@ load_new_data()
 (spark.readStream
   .table("orders_bronze")
   .createOrReplaceTempView("orders_bronze_tmp"))
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC -- The from_unixtime function in Databricks SQL is used to convert a Unix timestamp (the number of seconds since 1970-01-01 00:00:00 UTC) into a human-readable string representing the date and time. The function can take one or two arguments: the Unix timestamp to convert, and an optional format string that specifies the output format of the date and time.
+# MAGIC
+# MAGIC SELECT from_unixtime(1609459200);
+# MAGIC -- Output: '2021-01-01 00:00:00'
 
 # COMMAND ----------
 
