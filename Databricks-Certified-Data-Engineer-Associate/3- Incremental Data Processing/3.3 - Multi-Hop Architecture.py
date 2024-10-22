@@ -17,7 +17,14 @@
 
 # COMMAND ----------
 
-files = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
+# I want to get 3 files parquets in path 
+files  = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
+if len(files) > 3:
+    for file in files[3:]:
+        dbutils.fs.rm(file.path, True)
+
+# COMMAND ----------
+
 display(files)
 
 # COMMAND ----------

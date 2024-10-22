@@ -66,6 +66,7 @@ load_new_data()
 
 files = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
 display(files)
+# display(len(files))
 
 # COMMAND ----------
 
