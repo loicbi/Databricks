@@ -30,7 +30,7 @@ FROM customers
 
 -- COMMAND ----------
 
-SELECT from_json(profile) AS profile_struct
+SELECT from_json(profile, schema_of_json('{"address":{"city":"Gornji Milanovac","country":"Serbia","street":"0 Elmside Court"},"first_name":"Jacquelyn","gender":"Female","last_name":"Abby"}')) AS profile_struct
   FROM customers;
 
 /*
