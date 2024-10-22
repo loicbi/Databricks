@@ -117,6 +117,13 @@ spark.readStream \
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC The outputMode("complete") in a streaming query specifies that the entire updated Result Table will be outputted to the sink after every trigger. This mode is typically used for aggregations where the result of the aggregation changes over time and you want to output the complete aggregated results after each trigger.
+# MAGIC
+# MAGIC However, it's important to note that using outputMode("complete") with non-aggregation queries in a streaming context might not be supported or could lead to unexpected behavior. For instance, if you're writing a stream to a Delta table without any aggregation, you might want to use outputMode("append") instead, which adds new rows to the Result Table and is more suitable for most non-aggregation streaming workloads .
+
+# COMMAND ----------
+
 # MAGIC %sql
 # MAGIC INSERT INTO books
 # MAGIC values ("B16", "Hands-On Deep Learning Algorithms with Python", "Sudharsan Ravichandiran", "Computer Science", 25),
