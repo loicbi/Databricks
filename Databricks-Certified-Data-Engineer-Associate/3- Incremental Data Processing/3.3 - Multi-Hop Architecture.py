@@ -223,6 +223,11 @@ load_new_data()
 
 # COMMAND ----------
 
+# ADD ALL DATA 
+load_new_data(all=True)
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC
 # MAGIC ## Stopping active streams
@@ -233,3 +238,7 @@ for s in spark.streams.active:
     print("Stopping stream: " + s.id)
     s.stop()
     s.awaitTermination()
+
+# COMMAND ----------
+
+
