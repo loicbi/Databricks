@@ -17,10 +17,10 @@
 
 # COMMAND ----------
 
-# I want to get 3 files parquets in path 
+# I want to get 1 file parquets in path 
 files  = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
-if len(files) > 3:
-    for file in files[3:]:
+if len(files) > 1:
+    for file in files[1:]:
         dbutils.fs.rm(file.path, True)
 
 # COMMAND ----------
@@ -52,7 +52,7 @@ display(files)
 
 # MAGIC %sql
 # MAGIC CREATE OR REPLACE TEMPORARY VIEW orders_tmp AS (
-# MAGIC   SELECT *, current_timestamp() arrival_time, input_file_name() source_file
+# MAGIC   SELECT *, from_utc_timestamp(current_timestamp(), 'America/Montreal') as arrival_time, input_file_name() source_file
 # MAGIC   FROM orders_raw_temp
 # MAGIC )
 
@@ -65,6 +65,11 @@ display(files)
 
 # MAGIC %md
 # MAGIC ## Creating Bronze Table
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC DROP TABLE IF EXISTS orders_bronze;
 
 # COMMAND ----------
 
