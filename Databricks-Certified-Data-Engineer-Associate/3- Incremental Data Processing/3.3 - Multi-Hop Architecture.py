@@ -149,6 +149,11 @@ load_new_data()
 
 # COMMAND ----------
 
+# MAGIC %sql 
+# MAGIC SELECT * FROM orders_enriched_tmp
+
+# COMMAND ----------
+
 (spark.table("orders_enriched_tmp")
       .writeStream
       .format("delta")
@@ -184,6 +189,13 @@ load_new_data()
 # COMMAND ----------
 
 # MAGIC %sql
+# MAGIC -- https://docs.databricks.com/en/sql/language-manual/functions/date_trunc.html#examples
+# MAGIC   SELECT date_trunc("DD", '2022-07-23T17:16:31.000+00:00')
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC -- IF WE USE orders_silver DATA WON'T BE REFRESH BECOUSE orders_silver_tmp originates from streaming table.  
 # MAGIC CREATE OR REPLACE TEMP VIEW daily_customer_books_tmp AS (
 # MAGIC   SELECT customer_id, f_name, l_name, date_trunc("DD", order_timestamp) order_date, sum(quantity) books_counts
 # MAGIC   FROM orders_silver_tmp
