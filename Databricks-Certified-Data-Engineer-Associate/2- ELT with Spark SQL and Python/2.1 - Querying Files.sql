@@ -150,7 +150,8 @@ SELECT COUNT(*) FROM books_csv
 
 -- COMMAND ----------
 
-CREATE TABLE customers AS
+CREATE TABLE
+ customers AS
 SELECT * FROM json.`${dataset.bookstore}/customers-json`;
 
 DESCRIBE EXTENDED customers;
