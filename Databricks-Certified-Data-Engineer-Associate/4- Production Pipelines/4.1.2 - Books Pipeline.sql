@@ -3,6 +3,18 @@ SET datasets.path=dbfs:/mnt/demo-datasets/bookstore;
 
 -- COMMAND ----------
 
+-- MAGIC %python
+-- MAGIC files = dbutils.fs.ls('dbfs:/mnt/demo/dlt_booksstore')
+-- MAGIC display(files)
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC files = dbutils.fs.ls('dbfs:/mnt/demo/dlt_booksstore/system/events/')
+-- MAGIC display(files)
+
+-- COMMAND ----------
+
 -- MAGIC %md
 -- MAGIC
 -- MAGIC
