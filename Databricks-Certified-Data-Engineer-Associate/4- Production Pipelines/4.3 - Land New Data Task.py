@@ -1,6 +1,6 @@
 # Databricks notebook source
-path = 'dbfs:/mnt/demo-datasets'
-dbutils.fs.rm(path, True)
+# path = 'dbfs:/mnt/demo-datasets'
+# dbutils.fs.rm(path, True)
 
 # COMMAND ----------
 
