@@ -45,7 +45,7 @@ APPLY CHANGES INTO LIVE.books_silver
 
 CREATE LIVE TABLE author_counts_state
   COMMENT "Number of books per author"
-AS SELECT author, count(*) as books_count, current_timestamp() updated_time
+AS SELECT author, count(*) as books_count, CONVERT_TIMEZONE('UTC', 'America/Montreal', current_timestamp()) AS updated_time
   FROM LIVE.books_silver
   GROUP BY author
 
