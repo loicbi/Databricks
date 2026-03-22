@@ -1,0 +1,41 @@
+{
+    "id": "f5d53513-7b60-434f-919a-d4b8164ed373",
+    "pipeline_type": "WORKSPACE",
+    "clusters": [
+        {
+            "label": "default",
+            "node_type_id": "i3.16xlarge",
+            "driver_node_type_id": "i3.16xlarge",
+            "policy_id": "0000262DE369E18A",
+            "num_workers": 0
+        },
+        {
+            "label": "maintenance",
+            "policy_id": "0000262DE369E18A"
+        }
+    ],
+    "development": false,
+    "continuous": false,
+    "channel": "CURRENT",
+    "photon": false,
+    "libraries": [
+        {
+            "notebook": {
+                "path": "/Users/labuser7088457_1730567743@vocareum.com/Databricks/Databricks-Certified-Data-Engineer-Associate/4- Production Pipelines/4.1 - Delta Live Tables"
+            }
+        },
+        {
+            "notebook": {
+                "path": "/Users/labuser7088457_1730567743@vocareum.com/Databricks/Databricks-Certified-Data-Engineer-Associate/4- Production Pipelines/4.1.2 - Books Pipeline"
+            }
+        }
+    ],
+    "name": "pipeline_books_sotore",
+    "edition": "ADVANCED",
+    "storage": "dbfs:/mnt/demo/dlt/demo_bookstore",
+    "configuration": {
+        "datasets.path": "dbfs:/mnt/demo-datasets/bookstore"
+    },
+    "target": "demo_books_store_dlt_db",
+    "data_sampling": false
+}
