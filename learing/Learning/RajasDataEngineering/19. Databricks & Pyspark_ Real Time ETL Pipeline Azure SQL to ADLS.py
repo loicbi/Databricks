@@ -13,7 +13,7 @@ spark.conf.set(
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Step 1: Extract Data from ADLS 
+# MAGIC Step 1: Extract Data from ADLS
 
 # COMMAND ----------
 
